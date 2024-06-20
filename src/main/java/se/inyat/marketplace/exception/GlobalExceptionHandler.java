@@ -1,4 +1,3 @@
-// src/main/java/se/inyat/marketplace/exception/GlobalExceptionHandler.java
 package se.inyat.marketplace.exception;
 
 import org.springframework.http.HttpStatus;

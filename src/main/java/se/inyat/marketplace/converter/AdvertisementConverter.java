@@ -1,4 +1,3 @@
-// src/main/java/se/inyat/marketplace/converter/AdvertisementConverter.java
 package se.inyat.marketplace.converter;
 
 import se.inyat.marketplace.model.dto.AdvertisementView;

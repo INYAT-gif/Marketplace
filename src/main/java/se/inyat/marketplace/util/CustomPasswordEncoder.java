@@ -1,4 +1,3 @@
-// src/main/java/se/inyat/marketplace/util/CustomPasswordEncoder.java
 package se.inyat.marketplace.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,10 +8,12 @@ public class CustomPasswordEncoder {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public CustomPasswordEncoder() {
+
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public String encode(String rawPassword) {
+
         return passwordEncoder.encode(rawPassword);
     }
 

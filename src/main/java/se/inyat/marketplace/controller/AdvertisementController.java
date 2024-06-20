@@ -1,4 +1,3 @@
-// src/main/java/se/inyat/marketplace/controller/AdvertisementController.java
 package se.inyat.marketplace.controller;
 
 import se.inyat.marketplace.model.dto.AdvertisementForm;

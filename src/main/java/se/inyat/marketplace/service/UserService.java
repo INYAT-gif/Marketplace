@@ -1,4 +1,3 @@
-// src/main/java/se/inyat/marketplace/service/UserService.java
 package se.inyat.marketplace.service;
 
 import se.inyat.marketplace.converter.UserConverter;
@@ -26,6 +25,7 @@ public class UserService {
     private CustomPasswordEncoder passwordEncoder;
 
     public Optional<User> findByEmail(String email) {
+
         return userRepository.findByEmail(email);
     }
 
@@ -40,6 +40,7 @@ public class UserService {
     }
 
     public UserView convertToView(User user) {
+
         return userConverter.convertToView(user);
     }
 

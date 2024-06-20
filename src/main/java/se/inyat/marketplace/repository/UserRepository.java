@@ -1,4 +1,3 @@
-// src/main/java/se/inyat/marketplace/repository/UserRepository.java
 package se.inyat.marketplace.repository;
 
 import se.inyat.marketplace.model.entity.User;

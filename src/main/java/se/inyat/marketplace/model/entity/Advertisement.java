@@ -1,4 +1,3 @@
-// src/main/java/se/inyat/marketplace/model/Advertisement.java
 package se.inyat.marketplace.model.entity;
 
 import lombok.Data;

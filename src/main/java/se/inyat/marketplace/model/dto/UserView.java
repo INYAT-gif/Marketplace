@@ -1,4 +1,3 @@
-// src/main/java/se/inyat/marketplace/dto/UserViewDTO.java
 package se.inyat.marketplace.model.dto;
 
 import lombok.Data;
