@@ -1,8 +1,9 @@
-// src/main/java/se/inyat/marketplace/controller/AdvertisementController.java
 package se.inyat.marketplace.controller;
 
-import se.inyat.marketplace.model.Advertisement;
-import se.inyat.marketplace.model.User;
+import se.inyat.marketplace.model.dto.AdvertisementForm;
+import se.inyat.marketplace.model.dto.AdvertisementView;
+import se.inyat.marketplace.model.entity.Advertisement;
+import se.inyat.marketplace.model.entity.User;
 import se.inyat.marketplace.service.AdvertisementService;
 import se.inyat.marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,31 +24,39 @@ public class AdvertisementController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<Advertisement> createAdvertisement(@RequestBody @Valid Advertisement advertisement, @RequestParam String email, @RequestParam String username, @RequestParam String password) {
-        Optional<User> optionalUser = userService.findByEmail(email);
+    public ResponseEntity<AdvertisementView> createAdvertisement(@RequestBody @Valid AdvertisementForm advertisementForm) {
+        Optional<User> optionalUser = userService.findByEmail(advertisementForm.getEmail());
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+            if (user.getUsername().equals(advertisementForm.getUsername()) && user.getPassword().equals(advertisementForm.getPassword())) {
+                Advertisement advertisement = new Advertisement();
+                advertisement.setTitle(advertisementForm.getTitle());
+                advertisement.setDescription(advertisementForm.getDescription());
+                advertisement.setExpirationDate(advertisementForm.getExpirationDate());
                 advertisement.setUser(user);
-                return ResponseEntity.ok(advertisementService.saveAdvertisement(advertisement));
+                return ResponseEntity.ok(advertisementService.convertToView(advertisementService.saveAdvertisement(advertisement)));
             } else {
                 return ResponseEntity.status(401).build();
             }
         } else {
             User newUser = new User();
-            newUser.setEmail(email);
-            newUser.setUsername(username);
-            newUser.setPassword(password);
+            newUser.setEmail(advertisementForm.getEmail());
+            newUser.setUsername(advertisementForm.getUsername());
+            newUser.setPassword(advertisementForm.getPassword());
             userService.saveUser(newUser);
+            Advertisement advertisement = new Advertisement();
+            advertisement.setTitle(advertisementForm.getTitle());
+            advertisement.setDescription(advertisementForm.getDescription());
+            advertisement.setExpirationDate(advertisementForm.getExpirationDate());
             advertisement.setUser(newUser);
-            return ResponseEntity.ok(advertisementService.saveAdvertisement(advertisement));
+            return ResponseEntity.ok(advertisementService.convertToView(advertisementService.saveAdvertisement(advertisement)));
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<Advertisement>> getActiveAdvertisements() {
-        return ResponseEntity.ok(advertisementService.findActiveAdvertisements());
+    public ResponseEntity<List<AdvertisementView>> getActiveAdvertisements() {
+        List<AdvertisementView> advertisements = advertisementService.findActiveAdvertisements();
+        return ResponseEntity.ok(advertisements);
     }
 }
-

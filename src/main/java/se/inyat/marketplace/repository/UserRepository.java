@@ -1,7 +1,7 @@
 // src/main/java/se/inyat/marketplace/repository/UserRepository.java
 package se.inyat.marketplace.repository;
 
-import se.inyat.marketplace.model.User;
+import se.inyat.marketplace.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

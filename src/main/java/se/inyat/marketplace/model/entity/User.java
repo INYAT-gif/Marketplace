@@ -1,8 +1,9 @@
 // src/main/java/se/inyat/marketplace/model/User.java
-package se.inyat.marketplace.model;
+package se.inyat.marketplace.model.entity;
 
 import lombok.Data;
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity

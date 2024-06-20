@@ -1,15 +1,18 @@
-// src/main/java/se/inyat/marketplace/controller/UserController.java
 package se.inyat.marketplace.controller;
 
-import se.inyat.marketplace.model.Advertisement;
-import se.inyat.marketplace.model.User;
+import se.inyat.marketplace.model.dto.UserForm;
+import se.inyat.marketplace.model.dto.UserView;
+import se.inyat.marketplace.model.entity.User;
+import se.inyat.marketplace.service.AdvertisementService;
 import se.inyat.marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -18,12 +21,18 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<User> authenticateUser(@RequestParam String email, @RequestParam String password) {
-        Optional<User> optionalUser = userService.findByEmail(email);
-        if (optionalUser.isPresent() && optionalUser.get().getPassword().equals(password)) {
-            return ResponseEntity.ok(optionalUser.get());
+    public ResponseEntity<UserView> authenticateUser(@RequestBody UserForm userForm) {
+        Optional<User> optionalUser = userService.findByEmail(userForm.getEmail());
+        if (optionalUser.isPresent() && optionalUser.get().getPassword().equals(userForm.getPassword())) {
+            return ResponseEntity.ok(userService.convertToView(optionalUser.get()));
         } else {
             return ResponseEntity.status(401).build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserView>> getAllUsers() {
+        List<UserView> users = userService.findAllUsers();
+        return ResponseEntity.ok(users);
     }
 }
