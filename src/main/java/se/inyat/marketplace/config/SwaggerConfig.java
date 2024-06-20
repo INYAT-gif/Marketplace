@@ -1,4 +1,4 @@
-package se.inyat.marketplace;
+package se.inyat.marketplace.config;
 
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
