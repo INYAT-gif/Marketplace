@@ -1,3 +1,4 @@
+// src/main/java/se/inyat/marketplace/controller/AdvertisementController.java
 package se.inyat.marketplace.controller;
 
 import se.inyat.marketplace.model.dto.AdvertisementForm;
@@ -29,7 +30,7 @@ public class AdvertisementController {
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (user.getUsername().equals(advertisementForm.getUsername()) && user.getPassword().equals(advertisementForm.getPassword())) {
+            if (user.getUsername().equals(advertisementForm.getUsername()) && userService.checkPassword(advertisementForm.getPassword(), user.getPassword())) {
                 Advertisement advertisement = new Advertisement();
                 advertisement.setTitle(advertisementForm.getTitle());
                 advertisement.setDescription(advertisementForm.getDescription());
