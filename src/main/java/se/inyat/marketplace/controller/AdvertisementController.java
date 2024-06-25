@@ -21,11 +21,15 @@ import java.util.Optional;
 @RequestMapping("/api/advertisements")
 public class AdvertisementController {
 
-    @Autowired
-    private AdvertisementService advertisementService;
+    private final AdvertisementService advertisementService;
+
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public AdvertisementController(AdvertisementService advertisementService, UserService userService) {
+        this.advertisementService = advertisementService;
+        this.userService = userService;
+    }
 
     /**
      * Creates a new advertisement. If the user does not exist, a new user is created.
