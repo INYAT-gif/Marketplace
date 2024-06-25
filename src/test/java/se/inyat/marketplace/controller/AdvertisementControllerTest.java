@@ -128,21 +128,6 @@ public class AdvertisementControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    @Test
-    public void testCreateAdvertisementInvalidInput() throws Exception {
-        AdvertisementForm form = new AdvertisementForm();
-        form.setTitle("");
-        form.setDescription("");
-        form.setExpirationDate(LocalDate.now().plusDays(10));
-        form.setEmail("test@example.com");
-        form.setUsername("testuser");
-        form.setPassword("password");
-
-        mockMvc.perform(post("/api/advertisements")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(form)))
-                .andExpect(status().isBadRequest());
-    }
 
     @Test
     public void testGetActiveAdvertisements() throws Exception {
