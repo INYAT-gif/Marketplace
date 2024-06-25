@@ -10,20 +10,41 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing advertisements.
+ */
 @Service
 public class AdvertisementService {
+
     @Autowired
     private AdvertisementRepository advertisementRepository;
 
+    /**
+     * Saves an advertisement to the database.
+     *
+     * @param advertisement the advertisement to save
+     * @return the saved advertisement
+     */
     public Advertisement saveAdvertisement(Advertisement advertisement) {
         return advertisementRepository.save(advertisement);
     }
 
+    /**
+     * Finds all active advertisements.
+     *
+     * @return a list of active advertisement views
+     */
     public List<AdvertisementView> findActiveAdvertisements() {
         List<Advertisement> advertisements = advertisementRepository.findByExpirationDateAfter(LocalDate.now());
         return advertisements.stream().map(this::convertToView).collect(Collectors.toList());
     }
 
+    /**
+     * Converts an Advertisement entity to an AdvertisementView DTO.
+     *
+     * @param advertisement the advertisement entity
+     * @return the advertisement view
+     */
     public AdvertisementView convertToView(Advertisement advertisement) {
         AdvertisementView advertisementView = new AdvertisementView();
         advertisementView.setId(advertisement.getId());

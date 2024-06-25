@@ -14,15 +14,25 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST controller for managing advertisements.
+ */
 @RestController
 @RequestMapping("/api/advertisements")
 public class AdvertisementController {
+
     @Autowired
     private AdvertisementService advertisementService;
 
     @Autowired
     private UserService userService;
 
+    /**
+     * Creates a new advertisement. If the user does not exist, a new user is created.
+     *
+     * @param advertisementForm the form containing advertisement and user data
+     * @return the created advertisement view
+     */
     @PostMapping
     public ResponseEntity<AdvertisementView> createAdvertisement(@RequestBody @Valid AdvertisementForm advertisementForm) {
         Optional<User> optionalUser = userService.findByEmail(advertisementForm.getEmail());
@@ -54,6 +64,11 @@ public class AdvertisementController {
         }
     }
 
+    /**
+     * Retrieves all active advertisements.
+     *
+     * @return a list of active advertisement views
+     */
     @GetMapping
     public ResponseEntity<List<AdvertisementView>> getActiveAdvertisements() {
         List<AdvertisementView> advertisements = advertisementService.findActiveAdvertisements();

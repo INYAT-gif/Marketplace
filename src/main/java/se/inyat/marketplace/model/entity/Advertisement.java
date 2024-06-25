@@ -5,9 +5,13 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+/**
+ * Entity representing an Advertisement.
+ */
 @Entity
 @Data
 public class Advertisement {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

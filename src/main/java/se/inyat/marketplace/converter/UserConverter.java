@@ -7,8 +7,18 @@ import se.inyat.marketplace.model.entity.User;
 
 import java.util.stream.Collectors;
 
+/**
+ * Converter for User entities to DTOs.
+ */
 @Component
 public class UserConverter {
+
+    /**
+     * Converts a User entity to a UserView DTO.
+     *
+     * @param user the user entity
+     * @return the user view
+     */
     public UserView convertToView(User user) {
         UserView userView = new UserView();
         userView.setId(user.getId());
