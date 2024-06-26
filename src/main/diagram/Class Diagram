@@ -1,0 +1,41 @@
+User
+---------
+- id: Long
+- email: String
+- username: String
+- password: String
+---------
++ getters and setters
+
+Advertisement
+---------
+- id: Long
+- title: String
+- description: String
+- expiryDate: LocalDate
+- user: User
+---------
++ getters and setters
+
+UserService
+---------
++ registerUser(User user): User
++ authenticateUser(email: String, password: String): User
+
+AdvertisementService
+---------
++ createAdvertisement(ad: Advertisement, user: User): Advertisement
++ getAdvertisements(filter: Map<String, String>): List<Advertisement>
+
+UserRepository extends JpaRepository<User, Long>
+AdvertisementRepository extends JpaRepository<Advertisement, Long>
+
+UserController
+---------
++ createUser(user: User): ResponseEntity<User>
++ authenticateUser(email: String, password: String): ResponseEntity<User>
+
+AdvertisementController
+---------
++ createAdvertisement(ad: Advertisement, user: User): ResponseEntity<Advertisement>
++ getAdvertisements(filter: Map<String, String>): ResponseEntity<List<Advertisement>>

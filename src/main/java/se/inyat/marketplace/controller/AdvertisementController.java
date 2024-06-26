@@ -1,4 +1,3 @@
-// src/main/java/se/inyat/marketplace/controller/AdvertisementController.java
 package se.inyat.marketplace.controller;
 
 import se.inyat.marketplace.model.dto.AdvertisementForm;
@@ -15,15 +14,29 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST controller for managing advertisements.
+ */
 @RestController
 @RequestMapping("/api/advertisements")
 public class AdvertisementController {
-    @Autowired
-    private AdvertisementService advertisementService;
+
+    private final AdvertisementService advertisementService;
+
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public AdvertisementController(AdvertisementService advertisementService, UserService userService) {
+        this.advertisementService = advertisementService;
+        this.userService = userService;
+    }
 
+    /**
+     * Creates a new advertisement. If the user does not exist, a new user is created.
+     *
+     * @param advertisementForm the form containing advertisement and user data
+     * @return the created advertisement view
+     */
     @PostMapping
     public ResponseEntity<AdvertisementView> createAdvertisement(@RequestBody @Valid AdvertisementForm advertisementForm) {
         Optional<User> optionalUser = userService.findByEmail(advertisementForm.getEmail());
@@ -55,6 +68,11 @@ public class AdvertisementController {
         }
     }
 
+    /**
+     * Retrieves all active advertisements.
+     *
+     * @return a list of active advertisement views
+     */
     @GetMapping
     public ResponseEntity<List<AdvertisementView>> getActiveAdvertisements() {
         List<AdvertisementView> advertisements = advertisementService.findActiveAdvertisements();
