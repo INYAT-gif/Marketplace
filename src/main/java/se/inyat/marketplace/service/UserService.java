@@ -1,12 +1,15 @@
 package se.inyat.marketplace.service;
 
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import se.inyat.marketplace.converter.UserConverter;
+import se.inyat.marketplace.model.dto.UserForm;
 import se.inyat.marketplace.model.dto.UserView;
 import se.inyat.marketplace.model.entity.User;
 import se.inyat.marketplace.repository.UserRepository;
 import se.inyat.marketplace.util.CustomPasswordEncoder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -77,5 +80,20 @@ public class UserService {
      */
     public boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    /**
+     * Authenticates a user by email and password.
+     *
+     * @param userForm the form containing user login data
+     * @return the authenticated user view
+     */
+    public ResponseEntity<UserView> authenticateUser(@Valid UserForm userForm) {
+        Optional<User> optionalUser = findByEmail(userForm.getEmail());
+        if (optionalUser.isPresent() && checkPassword(userForm.getPassword(), optionalUser.get().getPassword())) {
+            return ResponseEntity.ok(convertToView(optionalUser.get()));
+        } else {
+            return ResponseEntity.status(401).build();
+        }
     }
 }
